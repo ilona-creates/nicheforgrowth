@@ -13,7 +13,7 @@ root = pathlib.Path(__file__).resolve().parent.parent
 src = (root / 'index.html').read_text(encoding='utf-8', newline='')
 nl = '\r\n' if '\r\n' in src else '\n'
 URL = 'https://ilonamelnychuk.com/freeresource/'
-IMG = 'https://ilonamelnychuk.com/og-freebie-section.jpg'
+IMG = 'https://ilonamelnychuk.com/og-free-resource.jpg'
 TITLE = 'Free resource: The 3 questions to ask your potential clients to uncover a need they’d pay for'
 DESC = 'Not a non-committal desire. A need they’d pay for. Get the free resource from Product-Market-Fit Sprint.'
 
