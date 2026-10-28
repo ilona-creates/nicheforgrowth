@@ -721,6 +721,16 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
   },{threshold:0.12}) : null;
   document.querySelectorAll('.reveal').forEach(el=>{ io ? io.observe(el) : el.classList.add('in'); });
+  // In-page links scroll without putting a # in the address bar
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var t = document.getElementById(a.getAttribute('href').slice(1));
+      if (!t) return;
+      e.preventDefault();
+      t.scrollIntoView();
+    });
+  });
+
   // ---- Freebie form ----
   // Paste your Google Apps Script web app URL between the quotes once it is deployed.
   const FREEBIE_ENDPOINT = "https://script.google.com/macros/s/AKfycbw50ucHo2v1j3x5BbD9OVUpupvkz4miri2KR0jdn5O_ya-rtaUWIX1EwVxxcQy7J49o/exec";
