@@ -14,7 +14,7 @@ src = (root / 'index.html').read_text(encoding='utf-8', newline='')
 nl = '\r\n' if '\r\n' in src else '\n'
 URL = 'https://ilonamelnychuk.com/freeresource/'
 IMG = 'https://ilonamelnychuk.com/og-free-resource.jpg'
-TITLE = 'Free resource: The 3 questions to ask your potential clients to uncover a need they’d pay for'
+TITLE = 'Uncover needs your clients would pay for, with 3 questions'
 DESC = 'Not a non-committal desire. A need they’d pay for. Get the free resource from Product-Market-Fit Sprint.'
 
 def sub(pattern, repl, s):
