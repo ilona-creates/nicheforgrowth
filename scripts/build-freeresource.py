@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
-"""Regenerate freebie/index.html from index.html.
+"""Regenerate freeresource/index.html from index.html.
 
-/freebie/ is the shareable link for the freebie section. It is a full copy of the
+/freeresource/ is the shareable link for the freebie section. It is a full copy of the
 home page with its own social preview tags that scrolls to the freebie section on
 load, so the address never contains a #. Run this after every edit to index.html:
 
-    python3 scripts/build-freebie.py
+    python3 scripts/build-freeresource.py
 """
 import re, pathlib
 
 root = pathlib.Path(__file__).resolve().parent.parent
 src = (root / 'index.html').read_text(encoding='utf-8', newline='')
 nl = '\r\n' if '\r\n' in src else '\n'
-URL = 'https://ilonamelnychuk.com/freebie/'
+URL = 'https://ilonamelnychuk.com/freeresource/'
 IMG = 'https://ilonamelnychuk.com/og-freebie-section.jpg'
 TITLE = 'Free resource: The 3 questions to ask your potential clients to uncover a need they’d pay for'
 DESC = 'Not a non-committal desire. A need they’d pay for. Get the free resource from Product-Market-Fit Sprint.'
@@ -33,6 +33,6 @@ s = sub(r'<meta property="og:url" content="[^"]*">', '<meta property="og:url" co
 jump = ('<script>history.scrollRestoration="manual";window.addEventListener("load",function(){'
         'var f=document.getElementById("freebie");if(f){f.scrollIntoView({behavior:"instant"});}});</script>')
 s = sub(r'</body>', jump + nl + '</body>', s)
-(root / 'freebie').mkdir(exist_ok=True)
-(root / 'freebie' / 'index.html').write_text(s, encoding='utf-8', newline='')
-print('wrote freebie/index.html')
+(root / 'freeresource').mkdir(exist_ok=True)
+(root / 'freeresource' / 'index.html').write_text(s, encoding='utf-8', newline='')
+print('wrote freeresource/index.html')
