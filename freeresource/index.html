@@ -722,13 +722,16 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
   },{threshold:0.12}) : null;
   document.querySelectorAll('.reveal').forEach(el=>{ io ? io.observe(el) : el.classList.add('in'); });
-  // In-page links scroll without putting a # in the address bar
+  // In-page links scroll without a # in the address bar; free-resource buttons show /freeresource/
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(e){
       var t = document.getElementById(a.getAttribute('href').slice(1));
       if (!t) return;
       e.preventDefault();
       t.scrollIntoView();
+      if (a.getAttribute('href') === '#freebie') {
+        try { history.pushState(null, '', '/freeresource/'); } catch (err) {}
+      }
     });
   });
 
