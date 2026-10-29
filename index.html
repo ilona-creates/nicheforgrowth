@@ -197,6 +197,7 @@
   .tier-price{font-family:var(--serif);font-weight:500;font-size:clamp(21px,2vw,25px);line-height:1.2;color:var(--ink);white-space:nowrap;text-align:right;}
   .tier-price .from{font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);margin-right:0.8em;}
   .tier-price .from--solo{margin-right:0;}
+  .tier-price .tier-cta{font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);text-underline-offset:5px;}
   .tier-note{margin-top:28px;max-width:36em;font-size:15.5px;line-height:1.7;color:var(--ink-soft);}
   .qa-card{max-width:780px;margin:0 auto;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:56px 0 60px;}
   .qa-row{display:grid;grid-template-columns:64px 1fr;align-items:baseline;}
@@ -299,6 +300,8 @@
   .modal h2{font-size:clamp(26px,3.6vw,32px);line-height:1.25;margin:0 0 14px;text-wrap:balance;}
   .modal .lead{font-family:var(--serif);font-size:19px;line-height:1.6;color:var(--ink-soft);margin:0 0 34px;text-wrap:balance;}
   .modal .lead:empty{display:none;}
+  .modal .avail{margin:-16px 0 30px;font-size:14.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;line-height:1.6;color:var(--red);}
+  .modal .avail:empty,.modal.sent .avail{display:none;}
   .modal.no-lead h2{margin-bottom:34px;}
   .modal .form-status:empty{display:none;}
   .modal h2{white-space:pre-line;}
@@ -588,9 +591,9 @@
       </div>
       <h3 class="tiers-title reveal">Your options</h3>
       <ol class="tiers">
-        <li class="tier reveal"><span class="tier-num">01</span><h3 class="tier-name"><button type="button" class="tier-link" data-tier="wait">Learn to do this on your own</button></h3><p class="tier-price"><span class="from from--solo">Launching early-2027</span></p></li>
-        <li class="tier reveal"><span class="tier-num">02</span><h3 class="tier-name"><button type="button" class="tier-link" data-tier="together">Do it together with me by your side</button></h3><p class="tier-price"><span class="from">Starting at</span> £5,000</p></li>
-        <li class="tier reveal"><span class="tier-num">03</span><h3 class="tier-name"><button type="button" class="tier-link" data-tier="done">Get it done for you</button></h3><p class="tier-price"><span class="from">Starting at</span> £20,000</p></li>
+        <li class="tier reveal"><span class="tier-num">01</span><h3 class="tier-name"><button type="button" class="tier-link" data-tier="wait">Learn to do this on your own</button></h3><p class="tier-price"><button type="button" class="tier-link tier-cta" data-tier="wait">Course and community</button></p></li>
+        <li class="tier reveal"><span class="tier-num">02</span><h3 class="tier-name"><button type="button" class="tier-link" data-tier="together">Do it together with me by your side</button></h3><p class="tier-price"><button type="button" class="tier-link tier-cta" data-tier="together">Learn more</button></p></li>
+        <li class="tier reveal"><span class="tier-num">03</span><h3 class="tier-name"><button type="button" class="tier-link" data-tier="done">Get it done for you</button></h3><p class="tier-price"><button type="button" class="tier-link tier-cta" data-tier="done">Learn more</button></p></li>
       </ol>
       <p class="tier-note reveal">The transformation is possible in <span class="em">all three tiers</span>, the difference is in the amount of <span class="em">personal contact and guidance</span> you get from me.</p>
     </div>
@@ -701,6 +704,7 @@
     <p class="label eyebrow" id="tierEyebrow"></p>
     <h2 id="tierTitle"></h2>
     <p class="lead" id="tierLead"></p>
+    <p class="avail" id="tierAvail"></p>
     <form class="form" id="tierForm" novalidate>
       <div class="field">
         <label for="t-name">Your name</label>
@@ -780,9 +784,9 @@
   });
   // ---- Option pop-ups ----
   const REACH = "Request me to reach out to you";
-  const REACH_LEAD = "And take another step to getting your company to product-market fit";
+  const REACH_LEAD = "So you can tell me about your product and learn about the method";
   const TIERS = {
-    wait:     { eyebrow:"Learn to do this on your own", title:"Learn this whole PMF method at your own pace.", lead:"With a 6-week course and live implementation community", phone:true, button:"Get on early-bird waitlist", note:"Available early-2027", done:"Done. You're on the waitlist.", source:"pmf-waitlist-learn-on-your-own" },
+    wait:     { eyebrow:"Learn to do this on your own", title:"Learn this whole PMF method at your own pace.", lead:"With a 6-week course and live implementation community", phone:true, button:"Get on early-bird waitlist", avail:"Available early-2027", done:"Done. You're on the waitlist.", source:"pmf-waitlist-learn-on-your-own" },
     together: { eyebrow:"Do it together with me by your side", title:REACH, lead:REACH_LEAD, phone:true, button:"Get me to PMF", done:"Thank you, I\u2019ll be in touch as soon as today, or in the next few days", source:"pmf-request-do-it-together" },
     done:     { eyebrow:"Get it done for you", title:REACH, lead:REACH_LEAD, phone:true, button:"Get me to PMF", done:"Thank you, I\u2019ll be in touch as soon as today, or in the next few days", source:"pmf-request-done-for-you" }
   };
@@ -800,6 +804,7 @@
       document.getElementById('tierLead').textContent = tier.lead;
       tSubmit.textContent = tier.button;
       document.getElementById('tierNote').textContent = tier.note || "";
+      document.getElementById('tierAvail').textContent = tier.avail || "";
       tPhoneField.hidden = !tier.phone;
       dlg.classList.toggle('no-lead', !tier.lead);
       tForm.reset();
@@ -857,4 +862,4 @@
   });
 </script>
 </body>
-</html>
+</html>
