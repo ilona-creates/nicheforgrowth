@@ -135,12 +135,15 @@
   .assets li{counter-increment:asset;display:grid;grid-template-columns:96px 1fr;align-items:baseline;font-family:var(--serif);font-weight:500;font-size:clamp(20px,1.9vw,24px);line-height:1.35;color:var(--ink);}
   .assets li::before{content:"Asset " counter(asset);font-family:var(--sans);font-weight:600;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:#A93024;}
   .assets li > span{text-wrap:pretty;}
+  .assets .fw{display:block;margin-top:8px;font-family:var(--sans);font-weight:500;font-size:.66em;line-height:1.5;letter-spacing:.01em;color:var(--ink-soft);}
+  .assets .fw::before{content:"+";display:inline-flex;align-items:center;justify-content:center;width:1.3em;height:1.3em;margin-right:.65em;border:1px solid var(--blue);border-radius:50%;color:var(--blue-ink);font-size:1.2em;font-weight:500;line-height:1;vertical-align:middle;}
   @media (max-width:720px){
     .pricing{padding:84px 0 56px;}
     .method{padding:48px 0 92px;}
     .assets{margin-top:36px;gap:18px;}
     .assets li{grid-template-columns:82px 1fr;font-size:19px;}
     .assets li::before{font-size:10.5px;}
+    .assets .fw{font-size:.72em;}
   }
   .steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
   .step{border-top:1px solid var(--ink);padding-top:26px;}
@@ -603,13 +606,13 @@
     <div class="wrap">
       <div class="method-grid">
         <div class="method-intro reveal">
-          <h2 class="method-lead">At the end you&rsquo;ll get <span class="em">assets</span> for you <br>to keep, <span style="white-space:nowrap">re-use</span> and to train a team</h2>
+          <h2 class="method-lead">At the end you&rsquo;ll get <span class="em">assets</span> for you to use right away, and <span class="em">frameworks</span> to create them again for every new product you build</h2>
         </div>
         <ol class="assets reveal">
-          <li><span>A list of <span class="em">monetisable market needs</span></span></li>
-          <li><span>A PMF <span class="em">messaging and storytelling</span> bible</span></li>
-          <li><span>A PMF <span class="em">landing page structure framework</span></span></li>
-          <li><span>A PMF <span class="em">social media content structure</span> bible</span></li>
+          <li><span>Research-based needs and problems your market wants solved<span class="fw">the research framework of how we got them</span></span></li>
+          <li><span>Your product position and how to articulate it<span class="fw">the framework underneath it</span></span></li>
+          <li><span>Your messaging bible for social media marketing content<span class="fw">its framework</span></span></li>
+          <li><span>A landing page with your product position and messaging as a coherent story<span class="fw">its structure logic</span></span></li>
         </ol>
       </div>
     </div>
