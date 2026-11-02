@@ -731,6 +731,25 @@
   </div>
 </dialog>
 <script>
+  // Privacy-friendly analytics (PostHog, EU cloud). Cookieless: nothing is stored on the visitor's device,
+  // no names or emails are sent, and it only records on the real site (not in previews or local copies).
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  try {
+    posthog.init('phc_CVkfPBN6XwpMmqsyH74FLP2r6sFjp7M759FmQboSJkQF', {
+      api_host: 'https://eu.i.posthog.com',
+      persistence: 'memory',
+      person_profiles: 'identified_only',
+      autocapture: false,
+      disable_session_recording: true,
+      respect_dnt: true,
+      loaded: function(ph){
+        if (!/(^|\.)ilonamelnychuk\.com$/.test(location.hostname)) ph.opt_out_capturing();
+      }
+    });
+  } catch (err) {}
+  function track(name, props){ try { posthog.capture(name, props || {}); } catch (err) {} }
+</script>
+<script>
   const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
   },{threshold:0.12}) : null;
@@ -743,6 +762,7 @@
       e.preventDefault();
       t.scrollIntoView();
       if (a.getAttribute('href') === '#freebie') {
+        track('free_resource_button_click', { button: a.textContent.trim() });
         try { history.pushState(null, '', '/freeresource/'); } catch (err) {}
       }
     });
@@ -780,6 +800,7 @@
       .then(function(){
         statusEl.textContent = "Check your inbox, it will be there in a moment";
         noteEl.hidden = true;
+        track('free_resource_requested', { source: 'pmf-landing-page' });
         form.reset();
       })
       .catch(function(){
@@ -819,6 +840,7 @@
       dlg.classList.remove('sent');
       document.body.classList.add('modal-open');
       dlg.showModal();
+      track('option_opened', { option: btn.dataset.tier });
       dlg.scrollTop = 0;
       document.getElementById('t-name').focus();
     });
@@ -859,6 +881,7 @@
         tForm.reset();
         tStatus.textContent = tier.done;
         dlg.classList.add('sent');
+        track('option_requested', { source: tier.source });
       })
       .catch(function(){
         tStatus.textContent = "Something went wrong. Please try again.";
