@@ -140,6 +140,7 @@
   .pivot-quote > span + span{margin-top:14px;}
   .pivot-photo{margin:0;}
   .pivot-photo img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:18px;}
+  .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
   .consent{position:fixed;left:16px;bottom:16px;z-index:60;max-width:400px;background:var(--paper);border:1px solid var(--ink);border-radius:8px;padding:18px 20px 16px;box-shadow:0 10px 30px rgba(29,43,79,.18);font-size:14.5px;line-height:1.55;color:var(--ink);}
   .consent[hidden]{display:none;}
   .consent p{margin:0 0 14px;}
@@ -695,6 +696,7 @@
         <p class="lead reveal"><span class="lead-no">Not a non-committal desire</span><br><span class="em"><i>A need they&rsquo;d pay for</i></span></p>
         <span class="orn reveal" aria-hidden="true"></span>
         <form class="form reveal" id="freebieForm" novalidate>
+          <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
           <div class="field">
             <label for="f-name">Your name</label>
             <input id="f-name" name="name" type="text" autocomplete="given-name" placeholder="e.g. Sarah" required>
@@ -758,6 +760,7 @@
     <p class="lead" id="tierLead"></p>
     <p class="avail" id="tierAvail"></p>
     <form class="form" id="tierForm" novalidate>
+      <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
       <div class="field">
         <label for="t-name">Your name</label>
         <input id="t-name" name="name" type="text" autocomplete="given-name" placeholder="e.g. Sarah" required>
@@ -865,6 +868,7 @@
   // ---- Freebie form ----
   // Paste your Google Apps Script web app URL between the quotes once it is deployed.
   const FREEBIE_ENDPOINT = "https://script.google.com/macros/s/AKfycbwqH8I7ldsJVm_rjy9oybrDVxhwLnGMvjoAZsSx_KqLZ52KrGtqE1y---BJweT2W-tbhA/exec";
+  const pageStart = Date.now();
   const form = document.getElementById('freebieForm');
   const statusEl = document.getElementById('freebieStatus');
   const submitBtn = document.getElementById('freebieSubmit');
@@ -890,6 +894,8 @@
     params.append('name', name);
     params.append('email', email);
     params.append('source', 'pmf-landing-page');
+    params.append('website', form.elements['website'].value);
+    params.append('elapsed', String(Date.now() - pageStart));
     fetch(FREEBIE_ENDPOINT, { method:'POST', mode:'no-cors', body: params })
       .then(function(){
         statusEl.textContent = "Check your inbox, it will be there in a moment";
@@ -917,9 +923,11 @@
   const tSubmit = document.getElementById('tierSubmit');
   const tPhoneField = document.getElementById('tierPhoneField');
   let tier = null;
+  let tierStart = Date.now();
   document.querySelectorAll('.tier-link, .footer-request-link').forEach(function(btn){
     btn.addEventListener('click', function(){
       tier = TIERS[btn.dataset.tier];
+      tierStart = Date.now();
       document.getElementById('tierEyebrow').textContent = tier.eyebrow;
       document.getElementById('tierTitle').textContent = tier.title;
       document.getElementById('tierLead').textContent = tier.lead;
@@ -970,6 +978,8 @@
     params.append('email', email);
     params.append('phone', phone);
     params.append('source', tier.source);
+    params.append('website', tForm.elements['website'].value);
+    params.append('elapsed', String(Date.now() - pageStart));
     fetch(FREEBIE_ENDPOINT, { method:'POST', mode:'no-cors', body: params })
       .then(function(){
         tForm.reset();
